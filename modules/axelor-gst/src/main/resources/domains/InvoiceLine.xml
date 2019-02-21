@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
+
+  <module name="gst" package="com.axelor.gst.db" />
+  
+  <entity name="InvoiceLine" cachable="true">
+  <many-to-one name="product" ref="Product" /> 
+    <string name="hsbn" title="HSBN"/>
+    <string name="item" required="true" title="ITEM"/>
+    <integer name="qty" title="Quantity"/>
+    <decimal name="price" title="Price"/>
+    <decimal name="netAmount" readonly="true" title="Net Amount"/>
+    <decimal name="gstrate" readonly="true" title="GST Rate"/>
+    <decimal name="igst" readonly="true" title="IGST"/>
+    <decimal name="sgst" readonly="true" title="SGST"/>
+    <decimal name="cgst" readonly="true" title="CGST"/>
+    <decimal name="grossAmount" readonly="true" title="Gross Amount"/>
+  </entity>
+
+</domain-models>

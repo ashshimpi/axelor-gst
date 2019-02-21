@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+  <menuitem name="menu-party" order="-100" title="Party" icon-background="pink"/>
+
+  <menuitem name="menu-party-contact" parent="menu-party"
+    title="Contact"
+    action="contact.all"/>
+
+  <action-view name="contact.all" title="Contacts" model="com.axelor.gst.db.Contact">
+    <view type="form" name="contact-form"/>
+    <view type="grid" name="contact-grid"/>
+    <context name="json-enhance" expr="true"/>
+  </action-view>
+
+  <menuitem name="menu-party-config" parent="menu-party"
+    title="Configurations"/>
+
+  <menuitem name="menu-party-address" parent="menu-party-config"
+    title="Address"
+    action="address.view"/>
+
+  <action-view name="address.view" title="Address" model="com.axelor.gst.db.Address">
+    <view type="grid" name="address-grid"/>
+    <view type="form" name="address-form"/>
+  </action-view>
+  
+  <menuitem name="menu-party-city" parent="menu-party-config"
+    title="City"
+    action="city.all"/>
+
+  <action-view name="city.all" title="City" model="com.axelor.gst.db.City">
+    <view type="grid" name="city-grid"/>
+    <view type="form" name="city-form"/>
+  </action-view>
+ 
+   <menuitem name="menu-party-state" parent="menu-party-config"
+    title="State"
+    action="state.all"/>
+
+  <action-view name="state.all" title="State" model="com.axelor.gst.db.State">
+    <view type="grid" name="state-grid"/>
+    <view type="form" name="state-form"/>
+  </action-view>
+  
+    <menuitem name="menu-party-country" parent="menu-party-config"
+    title="Country"
+    action="country.all"/>
+
+  <action-view name="country.all" title="Country" model="com.axelor.gst.db.Country">
+    <view type="grid" name="country-grid"/>
+    <view type="form" name="country-form"/>
+  </action-view>
+   
+   
+  <menuitem name="menu-product" order="-100" title="Product" icon-background="yellow"/>
+
+  <menuitem name="menu-product-product" parent="menu-product"
+    title="Products"
+    action="product.all"/>
+
+  <action-view name="product.all" title="Products" model="com.axelor.gst.db.Product">
+    <view type="cards" name="product-cards"/>
+    <view type="form" name="product-form"/>
+    <view type="grid" name="product-grid"/>
+  </action-view>
+   
+    <menuitem name="menu-product-category" parent="menu-product"
+    title="ProductCategory"
+    action="product.productcategory"/>
+
+  <action-view name="product.productcategory" title="ProductCategory" model="com.axelor.gst.db.ProductCategory">
+    <view type="form" name="productcat-form"/>
+    <view type="grid" name="productcat-grid"/>
+  </action-view>
+  
+   <menuitem name="menu-company" order="-100" title="Company" icon-background="orange"/>
+
+	<menuitem name="menu-company-company" parent="menu-company"
+    title="company"
+    action="company.all"/>
+
+  <action-view name="company.all" title="company" model="com.axelor.gst.db.Company">
+    <view type="form" name="company-form"/>
+    <view type="grid" name="company-grid"/>
+  </action-view>
+	
+  <menuitem name="menu-company-bank" parent="menu-company"
+    title="Bank Account"
+    action="bankdetail.all"/>
+
+  <action-view name="bankdetail.all" title="Bank Account" model="com.axelor.gst.db.BankDetail">
+    <view type="form" name="bank-form"/>
+    <view type="grid" name="bank-grid"/>
+  </action-view>
+
+<menuitem name="menu-company-seq" parent="menu-company"
+    title="Sequence"
+    action="sequence.all"/>
+
+  <action-view name="sequence.all" title="Sequence" model="com.axelor.gst.db.Sequence">
+    <view type="form" name="seq-form"/>
+    <view type="grid" name="seq-grid"/>
+  </action-view>
+
+<menuitem name="menu-invoice" order="-100" title="Invoice" icon-background="violet"/>
+
+  <menuitem name="menu-invoice-create" parent="menu-invoice"
+    title="Create Invoice"
+    action="invoice.create"/>
+
+  <action-view name="invoice.create" title="Create Invoice" model="com.axelor.gst.db.Invoice">
+    <view type="form" name="invoice-form"/>
+  </action-view>
+	
+	<menuitem name="menu-invoice-draft" parent="menu-invoice"
+    title="Draft invoices"
+    action="invoice.draft"/>
+
+  <action-view name="invoice.draft" title="Draft invoices" model="com.axelor.gst.db.Invoice">
+    <view type="grid" name="invoice-grid"/>
+    <view type="form" name="invoice-form"/>
+    <domain>self.status = :state</domain>
+    <context name="state" expr="Draft"/>
+  </action-view>
+	
+	<menuitem name="menu-invoice-validate" parent="menu-invoice"
+    title="Validated invoices "
+    action="invoice.validated"/>
+
+  <action-view name="invoice.validated" title="Validated invoices" model="com.axelor.gst.db.Invoice">
+    <view type="grid" name="invoice-grid"/>
+    <view type="form" name="invoice-form"/>
+    <domain>self.status = :state</domain>
+    <context name="state" expr="Validated"/>
+  </action-view>
+		
+ <menuitem name="menu-invoice-paid" parent="menu-invoice"
+    title="Paid invoices"
+    action="invoice.paid"/>
+
+  <action-view name="invoice.paid" title="Paid invoices" model="com.axelor.gst.db.Invoice">
+    <view type="grid" name="invoice-grid"/>
+    <view type="form" name="invoice-form"/>
+    <domain>self.status = :state</domain>
+    <context name="state" expr="Paid"/>
+  </action-view>	
+  
+  <menuitem name="menu-invoice-cancelled" parent="menu-invoice"
+    title="Cancelled invocies"
+    action="invoice.cancelled"/>
+
+  <action-view name="invoice.cancelled" title="Cancelled invocies" model="com.axelor.gst.db.Invoice">
+    <view type="grid" name="invoice-grid"/>
+    <view type="form" name="invoice-form"/>
+    <domain>self.status = :state</domain>
+    <context name="state" expr="cancelled"/>
+  </action-view>	
+  
+  <menuitem name="menu-invoice-all" parent="menu-invoice"
+    title="All Invoice"
+    action="invoice.all"/>
+
+  <action-view name="invoice.all" title="All Invoice" model="com.axelor.gst.db.Invoice">
+  	 <view type="grid" name="invoice-grid"/>
+    <view type="form" name="invoice-form"/>
+     <view type="kanban" name="project-task-kanban"/>
+  </action-view>
+
+
+
+
+</object-views>

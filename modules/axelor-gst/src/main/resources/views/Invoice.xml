@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+  <grid name="invoice-grid" title="Invoice" model="com.axelor.gst.db.Invoice">
+    <field name="status" />
+    <field name="company" />
+    <field name="date1" title="Current Date"/>
+    <field name="priority" />
+    <field name="partycontact" title="Party Contact"/>
+    <field name="invoiceaddress" title="Invoice address"/>
+    <field name="shippingaddress" title="Shipping Address"/>
+    <field name="addressValue" title="Address Value" />
+    <field name="netAmount" title="Net Amount"/>
+    <field name="netGstrate"  title="Net GST Rate"/>
+    <field name="netIgst" title="Net IGST"/>  
+    <field name="netCgst" title="Net CGST"/>
+    <field name="netSgst" title="Net SGST"/>
+    <field name="grossAmount" title="Gross Amount"/>
+    <field name="invoiceItems" title="Invoice Items"/>
+  </grid>
+
+  <form name="invoice-form" title="Invoice"  model="com.axelor.gst.db.Invoice" onNew="date-task-on-new" >
+   
+    
+   	<panel colSpan="12">
+   	 <field name="status" />
+    <field name="company" />
+    <field name="date1" title="Current Date"/>
+    <field name="priority" />
+    <field name="partycontact" title="Party Contact"/>
+    <field name="invoiceaddress" title="Invoice address">
+    </field>
+    <field name="shippingaddress" title="Shipping Address"/>
+    <field name="addressValue" title="Address Value" />
+    <field name="netAmount" title="Net Amount"/>
+    <field name="netGstrate"  title="Net GST Rate"/>
+    <field name="netIgst" title="Net IGST"/>  
+    <field name="netCgst" title="Net CGST"/>
+    <field name="netSgst" title="Net SGST"/>
+    <field name="grossAmount" title="Gross Amount"/>
+    
+   	</panel>
+   	<panel-related field="invoiceItems" title="Invoice Items"></panel-related>
+
+  </form>
+  
+  <kanban name="project-task-kanban" title="Project Tasks" model="com.axelor.gst.db.Invoice"
+  columnBy="status" sequenceBy="priority" onNew="project.task.kanban.on.new" limit="10">
+  <field name="company"/>
+
+  <hilite color="danger" if="status == 0" />
+  <hilite color="success" if="status == 100" />
+  <hilite color="info" if="status &gt;= 50" />
+  <hilite color="warning" if="status &gt; 0" />
+  <template><![CDATA[
+  <h4>{{name}}</h4>
+  <div class="card-footer">
+    <i class='fa fa-clock-o'></i> <span>{{date1|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+  </div>
+  ]]></template>
+</kanban>
+
+
+	 <action-record name="date-task-on-new" model="com.axelor.gst.db.Invoice">
+    <field name="date1" expr="eval:__datetime__"/>
+  	</action-record>
+
+</object-views>

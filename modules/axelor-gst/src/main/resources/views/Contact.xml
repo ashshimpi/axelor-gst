@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+ 
+  <grid name="contact-grid" title="Contacts" model="com.axelor.gst.db.Contact" editable="true">
+    <field name="name"/>
+    <field name="type"/>
+    <field name="primaryEmail" title="Primary Email"/>
+    <field name="secondaryEmail" title="Secondary Email"/>
+    <field name="primaryPhone" title="Primary Phone"/>
+    <field name="secondaryPhone" title="Secondary Phone"/>
+  </grid>
+
+  <form name="contact-form" title="Contact" model="com.axelor.gst.db.Contact" css="panel-blue">
+    <panel title="Personal" css="panel-red">
+      <panel colSpan="12">
+        <field name="name" title="Name" colSpan="6"/>
+        <field name="type" title="Type" colSpan="6" selection="contact.type.selection"/>
+      </panel>
+    </panel>
+    <panel title="Email" css="panel-green">
+      <field name="primaryEmail" title="Primary Email" colSpan="6"/>
+      <field name="secondaryEmail" title="Secondary Email" colSpan="6"/>
+      <field name="primaryPhone" title="Primary Phone" colSpan="6"/>
+      <field name="secondaryPhone" title="Secondary Phone" colSpan="6"/>
+    </panel>
+    <panel sidebar="true">
+      <field name="createdOn"/>
+      <field name="updatedOn"/>
+    </panel>
+  </form>
+
+	<cards name="contact-cards" title="Contacts" model="com.axelor.gst.db.Contact" orderBy="name">
+	    <field name="name"/>
+	    <field name="type"/>
+	    <field name="primaryEmail"/>
+	    <field name="secondaryEmail"/>
+	    <field name="primaryPhone"/>
+	    <field name="secondaryPhone"/>
+	    <template><![CDATA[
+	      <div class="span8">
+	          <abbr ng-if="name" title="Name">Name:</abbr> {{name}}<br>
+	          <abbr ng-if="type" title="Type">Type:</abbr> {{type}}<br>
+	          <abbr ng-if="primaryEmail" title="primaryemail">PE:</abbr> {{primaryEmail}}<br>
+	          <abbr ng-if="secondaryEmail" title="secondaryemail">SE:</abbr> {{secondaryEmail}}<br>
+	          <abbr ng-if="primaryPhone" title="primaryphone">PP:</abbr> {{primaryPhone}}<br>
+	          <abbr ng-if="secondaryPhone" title="secondaryphone">SP:</abbr> {{secondaryPhone}}<br>
+	      </div>
+	    ]]></template>
+  </cards>
+
+ 
+
+</object-views>
