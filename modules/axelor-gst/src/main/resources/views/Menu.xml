@@ -5,6 +5,15 @@
 
   <menuitem name="menu-party" order="-100" title="Party" icon-background="pink"/>
 
+	<menuitem name="menu-party-party" parent="menu-party"
+    title="Party"
+    action="party.all"/>
+
+  <action-view name="party.all" title="Party" model="com.axelor.gst.db.Party">
+    <view type="form" name="party-form"/>
+    <view type="grid" name="party-grid"/>
+  </action-view>
+	
   <menuitem name="menu-party-contact" parent="menu-party"
     title="Contact"
     action="contact.all"/>

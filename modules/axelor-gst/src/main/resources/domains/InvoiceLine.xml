@@ -10,7 +10,7 @@
     <string name="hsbn" title="HSBN"/>
     <string name="item" required="true" title="ITEM"/>
     <integer name="qty" title="Quantity"/>
-    <decimal name="price" title="Price"/>
+    <decimal name="price" title="Price" default="1"/>
     <decimal name="netAmount" readonly="true" title="Net Amount"/>
     <decimal name="gstrate" readonly="true" title="GST Rate"/>
     <decimal name="igst" readonly="true" title="IGST"/>

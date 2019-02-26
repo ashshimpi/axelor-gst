@@ -8,6 +8,7 @@
     <field name="company" />
     <field name="date1" title="Current Date"/>
     <field name="priority" />
+    <field name="party" title="party"/>
     <field name="partycontact" title="Party Contact"/>
     <field name="invoiceaddress" title="Invoice address"/>
     <field name="shippingaddress" title="Shipping Address"/>
@@ -23,15 +24,18 @@
 
   <form name="invoice-form" title="Invoice"  model="com.axelor.gst.db.Invoice" onNew="date-task-on-new" >
    
-    
+   
    	<panel colSpan="12">
-   	 <field name="status" />
+   	 <panel colSpan="12">
+   	 <field name="status" widget="nav-select"/>
+   	 </panel>
+   	 
     <field name="company" />
     <field name="date1" title="Current Date"/>
     <field name="priority" />
+    <field name="party" title="Party"/>
     <field name="partycontact" title="Party Contact"/>
-    <field name="invoiceaddress" title="Invoice address">
-    </field>
+    <field name="invoiceaddress" title="Invoice address"/>
     <field name="shippingaddress" title="Shipping Address"/>
     <field name="addressValue" title="Address Value" />
     <field name="netAmount" title="Net Amount"/>
@@ -43,8 +47,11 @@
     
    	</panel>
    	<panel-related field="invoiceItems" title="Invoice Items"></panel-related>
-
-  </form>
+	<panel sidebar="true">
+	      <button name="send" title="Send"/>
+	      <button name="Cancel" title="Cancel" />
+	    </panel>
+    </form>
   
   <kanban name="project-task-kanban" title="Project Tasks" model="com.axelor.gst.db.Invoice"
   columnBy="status" sequenceBy="priority" onNew="project.task.kanban.on.new" limit="10">
@@ -60,11 +67,8 @@
     <i class='fa fa-clock-o'></i> <span>{{date1|date:'yyyy-MM-dd HH:mm:ss'}}</span>
   </div>
   ]]></template>
-</kanban>
-
-
+	</kanban>
 	 <action-record name="date-task-on-new" model="com.axelor.gst.db.Invoice">
     <field name="date1" expr="eval:__datetime__"/>
   	</action-record>
-
 </object-views>

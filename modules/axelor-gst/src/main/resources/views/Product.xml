@@ -78,7 +78,7 @@
   	</action-record>
 	
 	 <action-record name="category-task-on-click" model="com.axelor.gst.db.ProductCategory">
-    <field name="gstRate" expr="eval:category.getGstRate();"/>
+    <field name="gstRate" expr="eval:category.getGstRate()" />
   	</action-record>
 	
 

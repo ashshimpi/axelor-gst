@@ -21,6 +21,10 @@
     <option value="other">Other</option>
   </selection>
  	 
- 
+ <selection name="party.type.selection">
+    <option value="individual">Individual</option>
+    <option value="company">Company</option>
+  </selection>
+ 	 
   
   </object-views>
