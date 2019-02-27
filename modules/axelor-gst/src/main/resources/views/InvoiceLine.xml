@@ -10,7 +10,7 @@
     <field name="qty" title="Quantity" />
     <field name="price" title="Price"/>
     <field name="netAmount" title="Net Amount"/>
-	<field name="gstrate" title="GST Rate"/>
+	<field name="gstRate" title="GST Rate"/>
 	<field name="igst" title="IGST"/>
 	<field name="sgst" title="SGST"/>
 	<field name="cgst" title="CGST"/>    
@@ -19,18 +19,24 @@
 
   <form name="invaoiceline-form" title="Invoice Line" cols="2" model="com.axelor.gst.db.InvoiceLine">
     <panel title="Overview">
-    <field name="product" title="Product" />
+    <field name="product" title="Product" onChange="invoice-task-on-click"/>
     <field name="hsbn" title="HSBN"/>
-    <field name="item" title="Item"/>
+    <field name="item" title="Item" onChange="invoice-task-on-click"/>
     <field name="qty" title="Quantity" />
     <field name="price" title="Price"/>
     <field name="netAmount" title="Net Amount"/>
-	<field name="gstrate" title="GST Rate"/>
+	<field name="gstRate" title="GST Rate"/>
 	<field name="igst" title="IGST"/>
 	<field name="sgst" title="SGST"/>
 	<field name="cgst" title="CGST"/>    
 	<field name="grossAmount" title="Gross Amount"/>
     </panel>
   </form>
+  
+   <action-record name="invoice-task-on-click" model="com.axelor.gst.db.Product">
+    <field name="gstRate" expr="eval:product.getGstRate()" />
+    <field name="item" expr="eval:product.getName()+product.getCode()" />
+  	</action-record>
+  	
 
 </object-views>

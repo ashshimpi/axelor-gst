@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.xml.ws.Service;
 
 import com.axelor.db.JpaSupport;
+import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
 import com.axelor.gst.db.State;
 import com.axelor.gst.service.InvoiceService;
@@ -19,13 +20,17 @@ public class InvoiceController extends JpaSupport{
 	
 	 public void calculate(ActionRequest request, ActionResponse response) {
 
+		 	Invoice invoice=request.getContext().getParent().asType(Invoice.class);
 		    InvoiceLine invoiceLine=request.getContext().asType(InvoiceLine.class);
-		    State invoiceState=request.getContext().asType(State.class);
-		    State companyState=request.getContext().asType(State.class);
-		    invoiceLine=invoiceService.calculate(invoiceLine, invoiceState, companyState);
+		    
+		    State invoiceAddresss= invoice.getInvoiceaddress().getState();
+		    State shippingAddress=invoice.getShippingaddress().getState();
+		    invoiceLine=invoiceService.calculate(invoiceLine, invoiceAddresss, shippingAddress);
 		   
 
 		    response.setValue("igst", invoiceLine.getIgst());
+		    response.setValue("sgst", invoiceLine.getSgst());
+		    response.setValue("cgst", invoiceLine.getCgst());
 		 
 		  }
 }
