@@ -30,7 +30,7 @@
 			<accessrule kind="accessible" pattern="jdk/nashorn/api/**"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry sourcepath="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-core/5.0.13-SNAPSHOT/130db6dd059314b7fa92ca13ed6c015bf1a37f4c/axelor-core-5.0.13-SNAPSHOT-sources.jar" kind="lib" path="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-core/5.0.13-SNAPSHOT/754204cabcc16ca9e9637ffc028b4f411ba129c7/axelor-core-5.0.13-SNAPSHOT.jar">
+	<classpathentry sourcepath="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-core/5.0.13-SNAPSHOT/e73c6c8e5bf34ab1ea52a6f1bff7a0f44c45bc03/axelor-core-5.0.13-SNAPSHOT-sources.jar" kind="lib" path="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-core/5.0.13-SNAPSHOT/43d00c2940b244e2ec39fda3f6c66053b1a76069/axelor-core-5.0.13-SNAPSHOT.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -42,7 +42,7 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-common/5.0.13-SNAPSHOT/fa595d43f992d475e54d82e203c99188defe7601/axelor-common-5.0.13-SNAPSHOT-sources.jar" kind="lib" path="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-common/5.0.13-SNAPSHOT/82588711a408427aa478b1ef2bacb0f31595679a/axelor-common-5.0.13-SNAPSHOT.jar">
+	<classpathentry sourcepath="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-common/5.0.13-SNAPSHOT/883cd39bf50c3844262d18501237476aff412302/axelor-common-5.0.13-SNAPSHOT-sources.jar" kind="lib" path="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-common/5.0.13-SNAPSHOT/9ba4757aa66925256c6c7f7d2bf9505ec9dee4a3/axelor-common-5.0.13-SNAPSHOT.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -1236,7 +1236,7 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-test/5.0.13-SNAPSHOT/57660cf75043fff5ded2a7204337d9db9a9f118c/axelor-test-5.0.13-SNAPSHOT-sources.jar" kind="lib" path="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-test/5.0.13-SNAPSHOT/9006234e0f3215a1b56b1a679f651d2696b391de/axelor-test-5.0.13-SNAPSHOT.jar">
+	<classpathentry sourcepath="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-test/5.0.13-SNAPSHOT/f90a299fed1b9410e5f4d3877c00fc33d77e1336/axelor-test-5.0.13-SNAPSHOT-sources.jar" kind="lib" path="/home/axelor/.gradle/caches/modules-2/files-2.1/com.axelor/axelor-test/5.0.13-SNAPSHOT/9e61f2a2a7f3b752840cd57147fc44a951dd3e6b/axelor-test-5.0.13-SNAPSHOT.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="test"/>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>

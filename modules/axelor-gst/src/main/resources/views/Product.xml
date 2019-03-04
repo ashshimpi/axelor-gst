@@ -34,7 +34,7 @@
       <panel title="Personal" css="panel-green">
       <panel colSpan="6">
         <field name="hsbn" title="HSBN" />
-        <field name="category" onChange="category-task-on-click"/>
+        <field name="category" onChange="category-task-on-change"/>
         <field name="salePrice" title="Sale Price"/>
         <field name="costPrice" title="Cost Price"/>
         <field name="gstRate" title="GST Rate">
@@ -77,7 +77,7 @@
     <field name="date1" expr="eval:__datetime__"/>
   	</action-record>
 	
-	 <action-record name="category-task-on-click" model="com.axelor.gst.db.ProductCategory">
+	 <action-record name="category-task-on-change" model="com.axelor.gst.db.ProductCategory">
     <field name="gstRate" expr="eval:category.getGstRate()" />
   	</action-record>
 	

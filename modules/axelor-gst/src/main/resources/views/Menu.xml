@@ -132,7 +132,7 @@
     <view type="grid" name="invoice-grid"/>
     <view type="form" name="invoice-form"/>
     <domain>self.status = :state</domain>
-    <context name="state" expr="Draft"/>
+    <context name="state" expr="draft"/>
   </action-view>
 	
 	<menuitem name="menu-invoice-validate" parent="menu-invoice"
@@ -143,7 +143,7 @@
     <view type="grid" name="invoice-grid"/>
     <view type="form" name="invoice-form"/>
     <domain>self.status = :state</domain>
-    <context name="state" expr="Validated"/>
+    <context name="state" expr="validated"/>
   </action-view>
 		
  <menuitem name="menu-invoice-paid" parent="menu-invoice"
@@ -154,7 +154,7 @@
     <view type="grid" name="invoice-grid"/>
     <view type="form" name="invoice-form"/>
     <domain>self.status = :state</domain>
-    <context name="state" expr="Paid"/>
+    <context name="state" expr="paid"/>
   </action-view>	
   
   <menuitem name="menu-invoice-cancelled" parent="menu-invoice"
@@ -165,7 +165,7 @@
     <view type="grid" name="invoice-grid"/>
     <view type="form" name="invoice-form"/>
     <domain>self.status = :state</domain>
-    <context name="state" expr="cancelled"/>
+    <context name="state" expr="cancel"/>
   </action-view>	
   
   <menuitem name="menu-invoice-all" parent="menu-invoice"
@@ -177,6 +177,8 @@
     <view type="form" name="invoice-form"/>
      <view type="kanban" name="project-task-kanban"/>
   </action-view>
+  
+  
 
 
 

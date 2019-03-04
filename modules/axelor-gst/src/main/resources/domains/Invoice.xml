@@ -9,7 +9,7 @@
     <item name="DRAFT" value="draft" />
     <item name="VALIDATED" value="validated" />
     <item name="PAID" value="paid" />
-    <item name="CANCELED" value="canceled" />
+    <item name="CANCEL" value="cancel" />
   </enum>
   <entity name="Invoice" cachable="true">
  
@@ -18,17 +18,17 @@
     <datetime name="date1" title="Date"/>
     <integer name="priority" title="Priority"/>
 	<many-to-one name="party" ref="Party" title="Party"/>
-    <many-to-one name="partycontact" ref="Contact" title="Party Contact"/> 
-    <many-to-one name="invoiceaddress" ref="Address" required="true" title="Invoice Address"/> 
-    <many-to-one name="shippingaddress" ref="Address" title="Shipping Address" /> 
-    <boolean name="addressValue" default="true" title="Address Value"/>
+    <many-to-one name="partyContact" ref="Contact" title="Party Contact"/> 
+    <many-to-one name="invoiceAddress" ref="Address" required="true" title="Invoice Address"/> 
+    <many-to-one name="shippingAddress" ref="Address" title="Shipping Address" /> 
+    <boolean name="addressValue" default="true" title="Use Invoice Address"/>
     <decimal name="netAmount" readonly="true" title="Net Amount"/>
     <decimal name="netGstrate" readonly="true" title="Net GST Rate"/>
     <decimal name="netIgst" readonly="true" title="Net IGST"/>
     <decimal name="netSgst" readonly="true" title="Net SGST"/>
     <decimal name="netCgst" readonly="true" title="NET CGST"/>
     <decimal name="grossAmount" readonly="true" title="Gross Amount"/>
-    <one-to-many name="invoiceItems" ref="InvoiceLine" title="Invoice Items"/>
+    <one-to-many name="invoiceItems" ref="InvoiceLine" title="Invoice Items" mappedBy="invoice"/>
   </entity>
 
 </domain-models>

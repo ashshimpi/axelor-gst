@@ -19,16 +19,18 @@
    	<panel colSpan="8">
    	<field name="name" />
    	<field name="gstin" title="GSTIN"/>
-   	<field name="address" />
+   	<field name="address" ></field>
+   	 
+       
    	</panel>
    	
    	<panel-related field="contact" colSpan="12">
    	<field name="name"/>
     <field name="type"/>
-    <field name="primaryemail"/>
-    <field name="secondaryemail"/>
-    <field name="primaryphone"/>
-    <field name="secondaryphone"/>
+    <field name="primaryEmail"/>
+    <field name="secondaryEmail"/>
+    <field name="primaryPhone"/>
+    <field name="secondaryPhone"/>
    	</panel-related>
    	<panel-related field="bankDetail" title="Bank Detail" colSpan="12">
    	<field name="bank" />

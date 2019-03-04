@@ -9,9 +9,9 @@
     <field name="date1" title="Current Date"/>
     <field name="priority" />
     <field name="party" title="party"/>
-    <field name="partycontact" title="Party Contact"/>
-    <field name="invoiceaddress" title="Invoice address"/>
-    <field name="shippingaddress" title="Shipping Address"/>
+    <field name="partyContact" title="Party Contact"/>
+    <field name="invoiceAddress" title="Invoice address"/>
+    <field name="shippingAddress" title="Shipping Address" />
     <field name="addressValue" title="Address Value" />
     <field name="netAmount" title="Net Amount"/>
     <field name="netGstrate"  title="Net GST Rate"/>
@@ -21,23 +21,58 @@
     <field name="grossAmount" title="Gross Amount"/>
     <field name="invoiceItems" title="Invoice Items"/>
   </grid>
-
   <form name="invoice-form" title="Invoice"  model="com.axelor.gst.db.Invoice" onNew="date-task-on-new" >
-   
-   
+  	<toolbar>
+			<button name="btnPrint" title="Print" showTitle="false"
+				 onClick="print.invoice" icon="fa-print" />
+		</toolbar>
    	<panel colSpan="12">
    	 <panel colSpan="12">
    	 <field name="status" widget="nav-select"/>
    	 </panel>
-   	 
     <field name="company" />
     <field name="date1" title="Current Date"/>
     <field name="priority" />
-    <field name="party" title="Party"/>
-    <field name="partycontact" title="Party Contact"/>
-    <field name="invoiceaddress" title="Invoice address"/>
-    <field name="shippingaddress" title="Shipping Address"/>
-    <field name="addressValue" title="Address Value" />
+    <field name="party" title="Party" onChange="action-invoice-party-productcontactall,action-invoice-addressinvoice-addressinvoice,action-invoice-addressshipping-addressshipping"/>
+    </panel>
+    <panel colSpan="12">
+  	<field name="partyContact" colSpan="12" title="Party Contact">
+ 	 <editor>
+   	    <field name="name"/>
+	    <field name="type"/>
+	    <field name="primaryEmail"/>
+	    <field name="secondaryEmail"/>
+	    <field name="primaryPhone"/>
+	    <field name="secondaryPhone"/>
+ 	 </editor>
+	</field>
+    </panel>
+    <panel colSpan="12">
+    <field name="invoiceAddress" title="Invoice address">
+	    <editor>
+	    	<field name="line1" />
+		    <field name="line2" />
+		    <field name="city" />
+		    <field name="state" />
+		    <field name="country" />
+		   	<field name="pinCode" title="Pin Code" />
+	    </editor>
+    </field>
+   
+    <field name="shippingAddress" title="Shipping Address" hidden="true">
+     <editor>
+     	<field name="line1" />
+		<field name="line2" />
+		<field name="city" />
+		<field name="state" />
+		<field name="country" />
+		<field name="pinCode" title="Pin Code" />
+     </editor>
+    </field>
+     <field name="addressValue" title="Address Value" onChange="invoice.onclick,invoice.hidden"/>
+    </panel>
+    <panel colSpan="12">
+    
     <field name="netAmount" title="Net Amount"/>
     <field name="netGstrate"  title="Net GST Rate"/>
     <field name="netIgst" title="Net IGST"/>  
@@ -46,7 +81,7 @@
     <field name="grossAmount" title="Gross Amount"/>
     
    	</panel>
-   	<panel-related field="invoiceItems" title="Invoice Items"></panel-related>
+   	<panel-related field="invoiceItems" title="Invoice Items" onChange="action-invoice-price-calculateall"></panel-related>
 	<panel sidebar="true">
 	      <button name="send" title="Send"/>
 	      <button name="Cancel" title="Cancel" />
@@ -68,7 +103,43 @@
   </div>
   ]]></template>
 	</kanban>
+	
 	 <action-record name="date-task-on-new" model="com.axelor.gst.db.Invoice">
     <field name="date1" expr="eval:__datetime__"/>
   	</action-record>
+  	
+	<action-method name="action-invoice-price-calculateall">
+    <call class="com.axelor.gst.web.InvoiceController" method="calculateAll"/>
+  </action-method><action-report name="print.sale.order" design="order.rptdesign"
+		output="so-${date}${time}" format="pdf">
+		<param name="orderId" expr="eval: id" />
+	</action-report>
+  
+  	
+  	<action-method name="action-invoice-party-productcontactall">
+    <call class="com.axelor.gst.web.InvoiceController" method="productcontactAll"/>
+  </action-method>
+  
+  <action-method name="action-invoice-addressinvoice-addressinvoice">
+    <call class="com.axelor.gst.web.InvoiceController" method="addressInvoice"/>
+  </action-method>
+  
+  <action-method name="action-invoice-addressshipping-addressshipping">
+    <call class="com.axelor.gst.web.InvoiceController" method="addressShipping"/>
+  </action-method>
+  
+    <action-attrs name="invoice.onclick">
+     <attribute name="value" for="shippingAddress" expr="eval:invoiceAddress" if="eval:addressValue"/>
+    </action-attrs>
+    
+    <action-attrs name="invoice.hidden">
+    <attribute name="hidden" for="shippingAddress" expr="eval:addressValue"/>
+    </action-attrs>
+  
+  <action-report name="print.invoice" design="invoice.rptdesign"
+		output="so-${date}${time}" format="pdf">
+		
+	</action-report>
+  
+  
 </object-views>

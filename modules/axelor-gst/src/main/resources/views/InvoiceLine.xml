@@ -23,7 +23,7 @@
     <field name="hsbn" title="HSBN"/>
     <field name="item" title="Item" onChange="invoice-task-on-click"/>
     <field name="qty" title="Quantity" />
-    <field name="price" title="Price"/>
+    <field name="price" title="Price" onChange="action-invoiceline-price-calculate"/>
     <field name="netAmount" title="Net Amount"/>
 	<field name="gstRate" title="GST Rate"/>
 	<field name="igst" title="IGST"/>
@@ -37,6 +37,10 @@
     <field name="gstRate" expr="eval:product.getGstRate()" />
     <field name="item" expr="eval:product.getName()+product.getCode()" />
   	</action-record>
+  	
+  	 <action-method name="action-invoiceline-price-calculate">
+    <call class="com.axelor.gst.web.InvoiceController" method="calculate"/>
+  </action-method>
   	
 
 </object-views>
