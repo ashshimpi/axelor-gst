@@ -138,7 +138,7 @@
   
   <action-report name="print.invoice" design="invoice.rptdesign"
 		output="so-${date}${time}" format="pdf">
-		
+		<param name="invoiceId" expr="eval: id" />
 	</action-report>
   
   
