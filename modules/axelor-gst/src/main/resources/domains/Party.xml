@@ -6,13 +6,14 @@
   <module name="gst" package="com.axelor.gst.db" />
 
   <entity name="Party" cachable="true">
+  	<string name="reference" readonly="true" title="Reference"/>
     <string name="name" required="true" title="Name"/>
     <string name="type" required="true" title="Type" default="Company" selection="party.type.selection"/>
     <boolean name="customer" title="Customer"/>
     <boolean name="supplier" title="Supplier"/>
     <string name="gstin" title="GSTIN" max="15" min="15"/>
-    <one-to-many name="contact" ref="Contact"/>
-    <one-to-many name="address" ref="Address"/>
+    <one-to-many name="contact" ref="Contact" title="Party Contact"/>
+    <one-to-many name="address" ref="Address" title="Party Address"/>
   </entity>
 
 </domain-models>

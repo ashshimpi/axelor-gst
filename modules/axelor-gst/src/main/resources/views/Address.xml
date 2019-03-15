@@ -4,11 +4,11 @@
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
 
   <grid name="address-grid" title="Address List" model="com.axelor.gst.db.Address">
-    <field name="type" title="Type" />
+	<field name="type" title="Type" />
     <field name="line1" title="Line1"/>
     <field name="line2" title="Line2"/>
-     <field name="city" title="City" />
-   <field name="state" title="State"/>
+    <field name="city" title="City" />
+   	<field name="state" title="State"/>
     <field name="country" title="Country"/>
     <field name="pinCode" title="Pin Code"/>
   </grid>

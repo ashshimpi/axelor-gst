@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<chart name="chart.customer.invoice.per.state" title="Customer Per State">
+    	<dataset type="sql">
+    	<![CDATA[
+    
+    	select count(party.name) as party, state.name as statenm
+ 		from 
+		gst_invoice as invoice
+		left join gst_party as party on (party.id=invoice.party) 
+		left join gst_address as address on (address.id=invoice.invoice_address)
+		left join gst_state as state on(state.id=address.state) Group By(state.name)
+    
+    	]]>
+    	</dataset>
+     	<category key="statenm"/>
+    	<series key="party" type="pie"/>
+  	</chart>
+  
+  
+   	<chart name="chart.invoice.per.status.amount" title="Amount Chart">
+    	<dataset type="sql">
+    	<![CDATA[
+    	select count(id),status,sum(gross_amount) as amount from
+		gst_invoice as invoice group by(status)
+    	]]>
+    	</dataset>
+    	<category key="status" type="text"/>
+    	<series key="amount" groupBy="status" type="bar"/>
+  	</chart>
+  
+   	<chart name="chart.invoice.per.status.invoice_number" title="No Of Invoice">
+    	<dataset type="sql">
+    	<![CDATA[
+    	select count(id) as id ,status from
+		gst_invoice as invoice group by(status);
+    	]]>
+    	</dataset>
+    	<category key="status" type="text"/>
+    	<series key="id" groupBy="status" type="line"/>
+  	</chart>
+  
+   	<chart name="chart.invoice.per.status.unpaid" title="Unpaid Invoice" onInit="fromdate.onload">
+   		<search-fields>
+			<field name="fromDateTime" type="date" title="From Date"/>
+	  		<field name="toDateTime" type="date" title="To Date"/>
+   		</search-fields>
+    	<dataset type="sql">
+    	<![CDATA[
+   		select count(invoice.id) as id, party.name as party , date(invoice.date1) from gst_invoice as invoice 
+		left join gst_party as party on (party.id=invoice.party) where invoice.status='validated' OR invoice.status='draft' 
+		AND  date(invoice.date1) >= date(:fromDateTime) AND date(invoice.date1) <= date(:toDateTime) Group By party.name , invoice.date1
+	    ]]>
+    	</dataset>
+    	<category key="party" type="text"/>
+    	<series key="id" groupBy="party" type="bar"/>
+  	</chart>
+  
+  <chart name="chart.invoice.per.status.paid" title="Paid Invoice" onInit="fromdate.onload.paid">
+  <search-fields>
+  <field name="fromDateTimepaid" type="date" title="From Date"/>
+  <field name="toDateTimepaid" type="date" title="To Date"/>
+  </search-fields>
+    <dataset type="sql">
+    <![CDATA[
+   
+   select                    
+	count(invo.id) as id,
+	pro.name as pro_name,
+	cat.name,
+	invo.date1
+  from 
+	gst_invoice as invo
+	 left join gst_invoice_line as in_line on (invo.id=in_line.invoice)
+	 left join gst_product as pro on (pro.id=in_line.product)
+ 	left join gst_product_category  as cat on (cat.id=pro.category)
+ 	where invo.status='paid' 
+ 	AND  date(invo.date1) >= date(:fromDateTimepaid) AND date(invo.date1) <= date(:toDateTimepaid) 
+  Group By
+    (invo.date1),
+	 (pro.name),
+ 	(cat.name)
+   
+    ]]>
+    </dataset>
+    <category key="pro_name" type="text"/>
+    <series key="id" groupBy="pro_name" type="bar"/>
+   
+  </chart>
+  <action-attrs name="fromdate.onload">
+  <attribute name="value" for="fromDateTime" expr="eval:__date__.withDayOfMonth(1)"/>
+  <attribute name="value" for="toDateTime" expr="eval:__date__"/>
+  </action-attrs>
+ 
+<action-attrs name="fromdate.onload.paid">
+  <attribute name="value" for="fromDateTimepaid" expr="eval:__date__.withDayOfMonth(1)"/>
+  <attribute name="value" for="toDateTimepaid" expr="eval:__date__"/>
+  </action-attrs>
+ 
+  
+  
+</object-views>

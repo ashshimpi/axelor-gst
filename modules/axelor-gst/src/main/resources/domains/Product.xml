@@ -3,18 +3,15 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
 
-  <module name="gst" package="com.axelor.gst.db"/>
-
-  <entity name="Product" sequential="true" cachable="true" repository="abstract">
-    <string name="name" required="true" title="Name"/>
-    <string name="code" required="true" title="Code"/>
-  	<string name="hsbn" title="HSBN" />
-  	<many-to-one name="category" ref="ProductCategory" />
-  	<decimal name="salePrice" title="Sale price"/>
-  	<decimal name="costPrice" title="Cost price"/>
-  	<binary name="image" title="Image" help="Max size 4MB." image="true"/>
-  	<decimal name="gstRate" title="GST rate"/>
-  	    
-  </entity>
-
+	<module name="gst" package="com.axelor.gst.db"/>
+	<entity name="Product" sequential="true" cachable="true">
+    	<string name="name" required="true" title="Name"/>
+    	<string name="code" required="true" title="Code"/>
+  		<string name="hsbn" title="HSBN" />
+  		<many-to-one name="category" ref="ProductCategory" />
+  		<decimal name="salePrice" title="Sale price"/>
+  		<decimal name="costPrice" title="Cost price"/>
+    	<many-to-one name="image" ref="com.axelor.meta.db.MetaFile" title="image" index="false"/>
+  		<decimal name="gstRate" title="GST rate"/>
+  	</entity>
 </domain-models>

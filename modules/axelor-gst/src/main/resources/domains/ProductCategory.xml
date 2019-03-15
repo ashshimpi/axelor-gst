@@ -3,12 +3,11 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
 
-  <module name="gst" package="com.axelor.gst.db"/>
+	<module name="gst" package="com.axelor.gst.db"/>
 
-  <entity name="ProductCategory" sequential="true" cachable="true" repository="abstract">
-    <string name="name" required="true" />
-    <string name="code" required="true" />
-  	<decimal name="gstRate" title="GST rate" />
-  </entity>
-
+	<entity name="ProductCategory" sequential="true" cachable="true">
+    	<string name="name" required="true" />
+    	<string name="code" required="true" />
+  		<decimal name="gstRate" title="GST rate" />
+	</entity>
 </domain-models>

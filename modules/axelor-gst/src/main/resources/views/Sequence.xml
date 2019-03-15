@@ -13,12 +13,14 @@
 
   <form name="seq-form" title="Squence" cols="2" model="com.axelor.gst.db.Sequence">
     <panel title="Overview">
-    <field name="prefix" />
-    <field name="suffix" />
-    <field name="padding" />
+    <field name="prefix" onChange="action-sequence-data"/>
+    <field name="suffix" onChange="action-sequence-data"/>
+    <field name="padding" onChange="action-sequence-data"/>
     <field name="nextNumber" />
-    <field name="model" />
+    <field name="model"/>
     </panel>
   </form>
-
+	<action-method name="action-sequence-data">
+    <call class="com.axelor.gst.web.SequenceController" method="seqData"/>
+    </action-method>
 </object-views>

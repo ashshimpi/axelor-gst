@@ -6,18 +6,18 @@
   <module name="gst" package="com.axelor.gst.db" />
   
   <enum name="InvoiceStatus">
-    <item name="DRAFT" value="draft" />
+   	<item name="DRAFT" value="draft" />
     <item name="VALIDATED" value="validated" />
     <item name="PAID" value="paid" />
     <item name="CANCEL" value="cancel" />
   </enum>
   <entity name="Invoice" cachable="true">
- 
-    <enum name="status" ref="InvoiceStatus" title="Status"></enum>
+    <enum name="status" ref="InvoiceStatus" title="Status" default="DRAFT" readonly="true" ></enum>
     <many-to-one name="company" ref="Company" required="true" title="Company"/> 
+    <string name="reference" readonly="true"/>
     <datetime name="date1" title="Date"/>
     <integer name="priority" title="Priority"/>
-	<many-to-one name="party" ref="Party" title="Party"/>
+	<many-to-one name="party" ref="Party" title="Party" required="true"/>
     <many-to-one name="partyContact" ref="Contact" title="Party Contact"/> 
     <many-to-one name="invoiceAddress" ref="Address" required="true" title="Invoice Address"/> 
     <many-to-one name="shippingAddress" ref="Address" title="Shipping Address" /> 

@@ -6,6 +6,7 @@
   <grid name="invoice-grid" title="Invoice" model="com.axelor.gst.db.Invoice">
     <field name="status" />
     <field name="company" />
+    <field name="reference"/>
     <field name="date1" title="Current Date"/>
     <field name="priority" />
     <field name="party" title="party"/>
@@ -21,125 +22,155 @@
     <field name="grossAmount" title="Gross Amount"/>
     <field name="invoiceItems" title="Invoice Items"/>
   </grid>
-  <form name="invoice-form" title="Invoice"  model="com.axelor.gst.db.Invoice" onNew="date-task-on-new" >
+  <form name="invoice-form" title="Invoice"  model="com.axelor.gst.db.Invoice" onNew="date-task-on-new,action-invoice-method-select-product,action-invoice-attrs-button-onNew" onLoad="action-invoice-attrs-hidden-onload" >
   	<toolbar>
 			<button name="btnPrint" title="Print" showTitle="false"
-				 onClick="print.invoice" icon="fa-print" />
-		</toolbar>
+				 onClick="action-invoice-report-print-invoice" icon="fa-print" />
+	</toolbar>
    	<panel colSpan="12">
-   	 <panel colSpan="12">
-   	 <field name="status" widget="nav-select"/>
-   	 </panel>
-    <field name="company" />
+   	<panel colSpan="12">
+   		<field name="status" widget="nav-select" readonly="true"/>
+   	</panel>
+    <field name="company" onChange="action-invoice-attrs-onchange-party-company" />
+    <field name="reference"/>
     <field name="date1" title="Current Date"/>
     <field name="priority" />
-    <field name="party" title="Party" onChange="action-invoice-party-productcontactall,action-invoice-addressinvoice-addressinvoice,action-invoice-addressshipping-addressshipping"/>
+    <field name="party" title="Party" onChange="action-invoice-method-generate-party-contact,
+    	action-invoice-address-method-generate-invoice-address,action-invoice-address-method-generate-shipping-address,action-invoice-attrs-onclick-address-value,action-invoice-attrs-onchange-party-company" />
     </panel>
     <panel colSpan="12">
-  	<field name="partyContact" colSpan="12" title="Party Contact">
- 	 <editor>
-   	    <field name="name"/>
-	    <field name="type"/>
-	    <field name="primaryEmail"/>
-	    <field name="secondaryEmail"/>
-	    <field name="primaryPhone"/>
-	    <field name="secondaryPhone"/>
- 	 </editor>
-	</field>
+  		<field name="partyContact" colSpan="12" title="Party Contact">
+ 	 	<editor>
+   	    	<field name="name"/>
+	    	<field name="type"/>
+	    	<field name="primaryEmail"/>
+	    	<field name="secondaryEmail"/>
+	    	<field name="primaryPhone"/>
+	    	<field name="secondaryPhone"/>
+ 	 	</editor>
+		</field>
     </panel>
     <panel colSpan="12">
-    <field name="invoiceAddress" title="Invoice address">
-	    <editor>
-	    	<field name="line1" />
-		    <field name="line2" />
-		    <field name="city" />
-		    <field name="state" />
-		    <field name="country" />
-		   	<field name="pinCode" title="Pin Code" />
-	    </editor>
+    <field name="invoiceAddress" title="Invoice address"/>
+    <field name="shippingAddress" title="Shipping Address">
     </field>
-   
-    <field name="shippingAddress" title="Shipping Address" hidden="true">
-     <editor>
-     	<field name="line1" />
-		<field name="line2" />
-		<field name="city" />
-		<field name="state" />
-		<field name="country" />
-		<field name="pinCode" title="Pin Code" />
-     </editor>
-    </field>
-     <field name="addressValue" title="Address Value" onChange="invoice.onclick,invoice.hidden"/>
+    	<field name="addressValue" title="Use Invoice address" onChange="action-invoice-address-method-generate-shipping-address"/>
     </panel>
     <panel colSpan="12">
-    
     <field name="netAmount" title="Net Amount"/>
     <field name="netGstrate"  title="Net GST Rate"/>
     <field name="netIgst" title="Net IGST"/>  
     <field name="netCgst" title="Net CGST"/>
     <field name="netSgst" title="Net SGST"/>
     <field name="grossAmount" title="Gross Amount"/>
-    
    	</panel>
-   	<panel-related field="invoiceItems" title="Invoice Items" onChange="action-invoice-price-calculateall"></panel-related>
+   	<panel-related field="invoiceItems" title="Invoice Items" onChange="action-invoice-method-calculate-invoice"></panel-related>
 	<panel sidebar="true">
-	      <button name="send" title="Send"/>
-	      <button name="Cancel" title="Cancel" />
-	    </panel>
+		<button name="validated" title="Validated" onClick="action-invoice-record-button-validated,action-invoice-attrs-onclick-validated-hidden,save" />
+	    <button name="paid" title="Paid" onClick="action-invoice-record-button-paid,action-invoice-attrs-onclick-paid-hidden,save" hidden="true"/>
+	    <button name="cancel" title="Cancel" onClick="action-invoice-record-button-cancel,save"/>
+	</panel>
     </form>
   
-  <kanban name="project-task-kanban" title="Project Tasks" model="com.axelor.gst.db.Invoice"
-  columnBy="status" sequenceBy="priority" onNew="project.task.kanban.on.new" limit="10">
-  <field name="company"/>
-
-  <hilite color="danger" if="status == 0" />
-  <hilite color="success" if="status == 100" />
-  <hilite color="info" if="status &gt;= 50" />
-  <hilite color="warning" if="status &gt; 0" />
-  <template><![CDATA[
-  <h4>{{name}}</h4>
-  <div class="card-footer">
+  	<kanban name="project-task-kanban" title="Project Tasks" model="com.axelor.gst.db.Invoice"
+  	columnBy="status" sequenceBy="priority" onNew="project.task.kanban.on.new" limit="10">
+  	<field name="company"/>
+  		<hilite color="danger" if="status == 0" />
+  		<hilite color="success" if="status == 100" />
+  		<hilite color="info" if="status &gt;= 50" />
+  		<hilite color="warning" if="status &gt; 0" />
+  	<template><![CDATA[
+  	<h4>{{name}}</h4>
+  	<div class="card-footer">
     <i class='fa fa-clock-o'></i> <span>{{date1|date:'yyyy-MM-dd HH:mm:ss'}}</span>
-  </div>
-  ]]></template>
+  	</div>
+  	]]></template>
 	</kanban>
 	
-	 <action-record name="date-task-on-new" model="com.axelor.gst.db.Invoice">
+	<action-record name="date-task-on-new" model="com.axelor.gst.db.Invoice">
     <field name="date1" expr="eval:__datetime__"/>
   	</action-record>
   	
-	<action-method name="action-invoice-price-calculateall">
-    <call class="com.axelor.gst.web.InvoiceController" method="calculateAll"/>
-  </action-method><action-report name="print.sale.order" design="order.rptdesign"
+	<action-method name="action-invoice-method-calculate-invoice">
+    <call class="com.axelor.gst.web.InvoiceController" method="calculateInvoice"/>
+	</action-method><action-report name="print.sale.order" design="order.rptdesign"
 		output="so-${date}${time}" format="pdf">
 		<param name="orderId" expr="eval: id" />
 	</action-report>
-  
   	
-  	<action-method name="action-invoice-party-productcontactall">
-    <call class="com.axelor.gst.web.InvoiceController" method="productcontactAll"/>
-  </action-method>
+  	<action-method name="action-invoice-method-generate-party-contact">
+    <call class="com.axelor.gst.web.InvoiceController" method="partyContact"/>
+  	</action-method>
   
-  <action-method name="action-invoice-addressinvoice-addressinvoice">
+  	<action-method name="action-invoice-address-method-generate-invoice-address">
     <call class="com.axelor.gst.web.InvoiceController" method="addressInvoice"/>
-  </action-method>
+  	</action-method>
   
-  <action-method name="action-invoice-addressshipping-addressshipping">
+  	<action-method name="action-invoice-address-method-generate-shipping-address">
     <call class="com.axelor.gst.web.InvoiceController" method="addressShipping"/>
-  </action-method>
+  	</action-method>
   
-    <action-attrs name="invoice.onclick">
-     <attribute name="value" for="shippingAddress" expr="eval:invoiceAddress" if="eval:addressValue"/>
+    <action-attrs name="action-invoice-attrs-onclick-address-value">
+    <attribute name="value" for="shippingAddress" expr="eval:invoiceAddress" if="addressValue"/>
     </action-attrs>
     
-    <action-attrs name="invoice.hidden">
-    <attribute name="hidden" for="shippingAddress" expr="eval:addressValue"/>
-    </action-attrs>
+<!--     <action-attrs name="action-invoice-attrs-button-hidden"> -->
+<!--     <attribute name="hidden" for="shippingAddress" expr="eval:addressValue"/> -->
+<!--     </action-attrs> -->
   
-  <action-report name="print.invoice" design="invoice.rptdesign"
-		output="so-${date}${time}" format="pdf">
+  	<action-report name="action-invoice-report-print-invoice" design="invoice.rptdesign" output="so-${date}${time}" format="pdf">
 		<param name="invoiceId" expr="eval: id" />
 	</action-report>
   
+	
+	
+	<action-record name="action-invoice-record-button-validated" model="com.axelor.gst.db.Invoice">
+	<field name="status" expr="validated"/>
+	</action-record>
+	
+	
+	<action-record name="action-invoice-record-button-paid" model="com.axelor.gst.db.Invoice">
+	<field name="status" expr="paid"/>
+	</action-record>
+	
+	<action-record name="action-invoice-record-button-cancel" model="com.axelor.gst.db.Invoice">
+	<field name="status" expr="cancel"/>
+	</action-record>
+	
+ 	<action-method name="action-invoice-method-generate-reference"> 
+     <call class="com.axelor.gst.web.InvoiceController" method="setReference"/>
+     </action-method>
+  
+ 	<action-method name="action-invoice-method-select-product">
+    <call class="com.axelor.gst.web.InvoiceController" method="selectedProduct"/>
+   	</action-method>
+
+   	<action-attrs name="action-invoice-attrs-onchange-party-company">
+   	<attribute name="hidden" for="validated" expr="false" if="company != null &amp;&amp; party != null"/>
+   	</action-attrs>
+   
+   	<action-attrs name="action-invoice-attrs-button-onNew">
+   	<attribute name="hidden" for="paid" expr="true"/>
+   	<attribute name="hidden" for="validated" expr="true"/>
+   	</action-attrs>
+   	
+   	<action-attrs name="action-invoice-attrs-onclick-validated-hidden">
+   	 <attribute name="hidden" for="validated" expr="true"/>
+   	 <attribute name="hidden" for="paid" expr="false"/>
+   	</action-attrs>
+   	
+   	<action-attrs name="action-invoice-attrs-onclick-paid-hidden">
+   	 <attribute name="hidden" for="validated" expr="true"/>
+   	 <attribute name="hidden" for="paid" expr="true"/>
+   	 <attribute name="hidden" for="cancel" expr="true"/>
+   	</action-attrs>
+   	
+   	<action-attrs name="action-invoice-attrs-hidden-onload">
+   	<attribute name="hidden" for="validated" expr="false" if="eval:status==InvoiceStatus.DRAFT"/>
+   	<attribute name="hidden" for="validated" expr="true" if="eval:status==InvoiceStatus.VALIDATED || status==InvoiceStatus.PAID || status==InvoiceStatus.CANCEL "/>
+   	<attribute name="hidden" for="paid" expr="false" if="eval:status==InvoiceStatus.VALIDATED"/>
+   	<attribute name="hidden" for="cancel" expr="true" if="eval:status==InvoiceStatus.CANCEL"/>
+   	<attribute name="hidden" for="cancel" expr="true" if="eval:status==InvoiceStatus.PAID"/>
+   	</action-attrs>
   
 </object-views>

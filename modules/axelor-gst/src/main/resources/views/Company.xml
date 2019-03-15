@@ -12,34 +12,33 @@
   </grid>
 
   <form name="company-form" title="Company"  model="com.axelor.gst.db.Company">
-   
     <panel colSpan="4">
-     <field name="logo" showTitle="false" colSpan="12"/>
+    	<field name="logo" showTitle="false" colSpan="12"/>
     </panel>
    	<panel colSpan="8">
-   	<field name="name" />
-   	<field name="gstin" title="GSTIN"/>
-   	<field name="address" ></field>
-   	 
-       
+   		<field name="name" />
+   		<field name="gstin" title="GSTIN"/>
+   		<field name="address" ></field>
    	</panel>
-   	
-   	<panel-related field="contact" colSpan="12">
-   	<field name="name"/>
-    <field name="type"/>
-    <field name="primaryEmail"/>
-    <field name="secondaryEmail"/>
-    <field name="primaryPhone"/>
-    <field name="secondaryPhone"/>
+   	<panel colSpan="12" >
+   	<field name="contact">
+   	 	<editor>
+   	 		<field name="name"/>
+     		<field name="type"/>
+     		<field name="primaryEmail"/>
+     		<field name="secondaryEmail"/>
+     		<field name="primaryPhone"/>
+     		<field name="secondaryPhone"/>
+   	 	</editor>
+   	</field>
+   	</panel>
+    <panel-related field="bankDetail" title="Bank Detail" colSpan="12">
+   		<field name="bank" />
+    	<field name="accountNo" />
+    	<field name="ifsc" />
+    	<field name="type" />
+   		<field name="address" />
    	</panel-related>
-   	<panel-related field="bankDetail" title="Bank Detail" colSpan="12">
-   	<field name="bank" />
-    <field name="accountNo" />
-    <field name="ifsc" />
-    <field name="type" />
-   	<field name="address" />
-   	</panel-related>
-    
   </form>
 
 </object-views>

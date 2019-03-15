@@ -1,1 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+   <dashboard name="welcome.dashboard" title="Dashboard">
+   <dashlet action="older.invoices.grid" colSpan="12"/>
+   <dashlet action="chart:chart.invoice.per.status.unpaid"/>
+   <dashlet action="chart:chart.invoice.per.status.paid"/>
+   <dashlet action="chart:chart.customer.invoice.per.state"/>
+   <dashlet action="chart:chart.invoice.per.status.amount"/>
+   <dashlet action="chart:chart.invoice.per.status.invoice_number"/>
+   
+   </dashboard>
+  
+  <action-view name="welcome" title="Dashboard">
+    <view type="dashboard" name="welcome.dashboard"/>
+  </action-view>
+
+  <menuitem name="menu-dashboards" order="-101"
+    title="Dashboards" icon="fa-dashboard" icon-background="blue"/>
+
+  <menuitem name="menu-welcome" parent="menu-dashboards"
+    title="Dashboard" action="welcome"/>
+    
+    <action-view name="older.invoices.grid" title="Old invoice" model="com.axelor.gst.db.Invoice">
+    <view type="grid" name="invoice-grid"/>
+    <domain>self.status = :_validated AND self.date1 &lt; :date2</domain>
+     <context name="_validated" expr="validated"/>
+     <context name="date2" expr="eval:__datetime__.minusMonths(1)"/>
+    </action-view>
+    
+</object-views>
+
+
+

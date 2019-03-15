@@ -6,9 +6,7 @@ import com.axelor.gst.db.Party;
 import com.axelor.gst.db.State;
 
 public interface InvoiceService {
-	
-	public InvoiceLine calculate(InvoiceLine invoiceLine, State invoiceState, State companyState) ;
-	public Invoice calculateAll(Invoice invoice);
-
-	
+	public InvoiceLine calculateInvoiceLine(InvoiceLine invoiceLine, State invoiceState, State shippingState) ;
+	public Invoice calculateInvoice(Invoice invoice);
+	public InvoiceLine setNewInvoice(InvoiceLine invoiceLines);
 }

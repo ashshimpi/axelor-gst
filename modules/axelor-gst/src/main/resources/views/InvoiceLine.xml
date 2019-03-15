@@ -2,45 +2,44 @@
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+	<grid name="invoiceline-grid" title="Invoice Line" model="com.axelor.gst.db.InvoiceLine">
+    	<field name="product" title="Product" />
+    	<field name="hsbn" title="HSBN"/>
+    	<field name="item" title="Item"/>
+    	<field name="qty" title="Quantity" />
+    	<field name="price" title="Price"/>
+    	<field name="netAmount" title="Net Amount"/>
+		<field name="gstRate" title="GST Rate"/>
+		<field name="igst" title="IGST"/>
+		<field name="sgst" title="SGST"/>
+		<field name="cgst" title="CGST"/>    
+		<field name="grossAmount" title="Gross Amount"/>
+	</grid>
 
-  <grid name="invoiceline-grid" title="Invoice Line" model="com.axelor.gst.db.InvoiceLine">
-    <field name="product" title="Product" />
-    <field name="hsbn" title="HSBN"/>
-    <field name="item" title="Item"/>
-    <field name="qty" title="Quantity" />
-    <field name="price" title="Price"/>
-    <field name="netAmount" title="Net Amount"/>
-	<field name="gstRate" title="GST Rate"/>
-	<field name="igst" title="IGST"/>
-	<field name="sgst" title="SGST"/>
-	<field name="cgst" title="CGST"/>    
-	<field name="grossAmount" title="Gross Amount"/>
-  </grid>
-
-  <form name="invaoiceline-form" title="Invoice Line" cols="2" model="com.axelor.gst.db.InvoiceLine">
-    <panel title="Overview">
-    <field name="product" title="Product" onChange="invoice-task-on-click"/>
-    <field name="hsbn" title="HSBN"/>
-    <field name="item" title="Item" onChange="invoice-task-on-click"/>
-    <field name="qty" title="Quantity" />
-    <field name="price" title="Price" onChange="action-invoiceline-price-calculate"/>
-    <field name="netAmount" title="Net Amount"/>
-	<field name="gstRate" title="GST Rate"/>
-	<field name="igst" title="IGST"/>
-	<field name="sgst" title="SGST"/>
-	<field name="cgst" title="CGST"/>    
-	<field name="grossAmount" title="Gross Amount"/>
-    </panel>
-  </form>
+  	<form name="invoiceline-form" title="Invoice Line" cols="2" model="com.axelor.gst.db.InvoiceLine">
+    	<panel title="Overview">
+    	<field name="product" title="Product" onChange="action-invoice-invoice-line-record-gererate-gst-item-onclick"/>
+    	<field name="hsbn" title="HSBN"/>
+	    <field name="item" title="Item" onChange="action-invoice-invoice-line-record-gererate-gst-item-onclick"/>
+	    <field name="qty" title="Quantity" onChange="action-invoice-line-method-calculate"/>
+	    <field name="price" title="Price" onChange="action-invoice-line-method-calculate"/>
+	    <field name="netAmount" title="Net Amount"/>
+		<field name="gstRate" title="GST Rate"/>
+		<field name="igst" title="IGST"/>
+		<field name="sgst" title="SGST"/>
+		<field name="cgst" title="CGST"/>    
+		<field name="grossAmount" title="Gross Amount"/>
+    	</panel>
+    </form>
   
-   <action-record name="invoice-task-on-click" model="com.axelor.gst.db.Product">
-    <field name="gstRate" expr="eval:product.getGstRate()" />
-    <field name="item" expr="eval:product.getName()+product.getCode()" />
-  	</action-record>
+	<action-record name="action-invoice-invoice-line-record-gererate-gst-item-onclick" model="com.axelor.gst.db.Product">
+    	<field name="gstRate" expr="eval:product.getGstRate()" />
+    	<field name="hsbn" expr="eval:product.getHsbn()"/>
+    	<field name="item" expr="eval:product.getName()+product.getCode()" />
+    </action-record>
   	
-  	 <action-method name="action-invoiceline-price-calculate">
-    <call class="com.axelor.gst.web.InvoiceController" method="calculate"/>
-  </action-method>
-  	
+	<action-method name="action-invoice-line-method-calculate">
+    	<call class="com.axelor.gst.web.InvoiceController" method="calculateInvoiceLine"/>
+  	</action-method>
 
 </object-views>

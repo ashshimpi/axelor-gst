@@ -9,5 +9,4 @@
     <string name="name" required="true" />
     <many-to-one name="country" ref="Country" required="true"/>
   </entity>
-
 </domain-models>

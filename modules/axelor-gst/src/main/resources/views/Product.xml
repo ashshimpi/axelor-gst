@@ -3,12 +3,11 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
 
-
   <grid name="product-grid" title="Product" model="com.axelor.gst.db.Product" editable="true">
 	<toolbar>
-	<button name="btninvoice" icon="fa-rocket" title="Invoice" onClick="act2"/>
-	 
-	  
+	<button name="btninvoice" icon="fa-rocket" title="Invoice" onClick="action-product-view-create-invoice"/>
+	 <button name="btnPrint" title="Print" showTitle="false"
+				 onClick="action-multiple-product,action-product-report-print-multiple-product" icon="fa-print" />
 	</toolbar>
     <field name="name"/>
     <field name="code"/>
@@ -20,30 +19,28 @@
   </grid>
 
   <form name="product-form" title="Product" model="com.axelor.gst.db.Product" css="panel-blue">
-  <toolbar> <button name="btnPrint" title="Print" showTitle="false"
-				 onClick="print.product" icon="fa-print" /></toolbar>
+  	<toolbar> 
+  		<button name="btnPrint" title="Print" showTitle="false"
+				 onClick="action-product-report-print-product" icon="fa-print" /></toolbar>
     <panel title="Personal" css="panel-red">
-      <panel colSpan="4">
-        <field name="image" showTitle="false" colSpan="12"/>
-      </panel>
-      <panel colSpan="8">
-        <field name="name" title="Name" colSpan="6"/>
-        <field name="code" colSpan="6"/>
-      </panel>
+    	<panel colSpan="4">
+        	<field name="image" showTitle="false" colSpan="12" widget="Image"/>
+      	</panel>
+    	<panel colSpan="8">
+    		<field name="name" title="Name" colSpan="6"/>
+        	<field name="code" colSpan="6"/>
+    	</panel>
     </panel>
-    
-    
-      <panel title="Personal" css="panel-green">
-      <panel colSpan="6">
-        <field name="hsbn" title="HSBN" />
-        <field name="category" onChange="category-task-on-change"/>
-        <field name="salePrice" title="Sale Price"/>
-        <field name="costPrice" title="Cost Price"/>
-        <field name="gstRate" title="GST Rate">
-        </field>
-      </panel>
+    <panel title="Personal" css="panel-green">
+    	<panel colSpan="6">
+        	<field name="hsbn" title="HSBN" />
+        	<field name="category" onChange="action-product-record-generate-gst"/>
+        	<field name="salePrice" title="Sale Price"/>
+        	<field name="costPrice" title="Cost Price"/>
+        	<field name="gstRate" title="GST Rate">
+        	</field>
+      	</panel>
     </panel>
-    
     <panel sidebar="true">
       <field name="createdOn"/>
       <field name="updatedOn"/>
@@ -62,11 +59,9 @@
       <div class="span4 card-image">
         <img ng-if="hasImage" ng-src="{{$image(null, 'image')}}">
         <img ng-if="!hasImage" src="img/user.png">
-        
       </div>
       <div class="span8">
         <address>
-         
           <abbr ng-if=""name"" title="Name">name:</abbr> {{name}}<br>
           <abbr ng-if="category" title="Category">category:</abbr> {{category}}<br>
           <abbr ng-if=""salePrice"" title="Salesc Price">price:</abbr> {{salePrice}}<br>
@@ -75,18 +70,26 @@
       </div>
     ]]></template>
   </cards>
-	 <action-record name="date-task-on-new" model="com.axelor.gst.db.Product">
-    <field name="date1" expr="eval:__datetime__"/>
-  	</action-record>
-	
-	 <action-record name="category-task-on-change" model="com.axelor.gst.db.ProductCategory">
-    <field name="gstRate" expr="eval:category.getGstRate()" />
-  	</action-record>
   	
-  	 <action-report name="print.product" design="product.rptdesign"
-		output="so-${date}${time}" format="pdf">
-	<param name="productId" expr="eval: id" />
+	<action-record name="action-product-record-generate-gst" model="com.axelor.gst.db.ProductCategory">
+    	<field name="gstRate" expr="eval:category.getGstRate()" />
+  	</action-record>
+	<action-report name="action-product-report-print-product" design="product.rptdesign"
+		output="PO-${date}${time}" format="pdf">
+		<param name="productId" expr="eval: id" />
+		<param name="path" expr="eval: com.axelor.app.AppSettings.get().getPath('file.upload.dir', '')" />
 	</action-report>
-	
+	<action-report name="action-product-report-print-multiple-product" design="productmultiple.rptdesign"
+		output="PO-${date}${time}" format="pdf">
+		<param name="productIds" expr="eval: productIds" />
+		<param name="path" expr="eval: com.axelor.app.AppSettings.get().getPath('file.upload.dir', '')" />
+	</action-report>
+	<action-view name="action-product-view-create-invoice" title="Productinvoice" model="com.axelor.gst.db.Invoice">
+		<view type="form" name="invoice-form"/>
+		<context name="_ids" expr="eval:_ids"/>
+	</action-view>
+	<action-method name="action-multiple-product">
+	<call class="com.axelor.gst.web.ProductController" method="selectedProductprint"/>
+	</action-method>
 
 </object-views>
